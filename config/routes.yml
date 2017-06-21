@@ -1,0 +1,4 @@
+routes:
+    '/':
+        controller: Index
+        action: index
