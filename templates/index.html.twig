@@ -1,0 +1,39 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    <div class="form">
+        <form>
+            <div class="form__row">
+                <label>Site URL:</label>
+                <input type="text" name="url"/>
+                <div class="form__row-error">
+                </div>
+            </div>
+            <div class="form__row">
+                <label>Seach type:</label>
+                <div class="form__row-item">
+                    <label>
+                        <input type="radio" name="seach" value="links" checked/>links
+                    </label>
+                </div>
+                <div class="form__row-item">
+                    <label>
+                        <input type="radio" name="seach" value="images"/>images
+                    </label>
+                </div>
+                <div class="form__row-item">
+                    <label>
+                        <input type="radio" name="seach" value="text"/>text
+                    </label>
+                </div>
+                <div class="form__row-error">
+                </div>
+            </div>
+            <div class="form__row hidden">
+                <label>Text to search:</label>
+                <input type="text" name="text"/>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+{% endblock %}

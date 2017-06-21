@@ -33,5 +33,11 @@ if (! ($controller && $action)) {
     die();
 }
 
-$controllerInstance = new $controller();
+/**
+ * Setting up Twig
+ */
+$loader = new Twig_Loader_Filesystem(__DIR__ . '/../templates');
+$twig = new Twig_Environment($loader);
+
+$controllerInstance = new $controller($twig);
 $controllerInstance->$action();

@@ -1,2 +1,10 @@
 RewriteEngine on
+
+# Add 'public' to any url
+RewriteCond %{REQUEST_URI} !^/public/.*$
+RewriteRule .* /public/$0 [QSA,L]
+
+# Rewrite everything to index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule .* public/index.php?url=$0 [QSA,L]
