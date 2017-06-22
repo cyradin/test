@@ -2,36 +2,35 @@
 
 {% block content %}
     <div class="form">
-        <form>
+        <form id="main-form">
             <div class="form__row">
                 <label>Site URL:</label>
                 <input type="text" name="url"/>
-                <div class="form__row-error">
-                </div>
+                <div class="form__row__error"></div>
             </div>
             <div class="form__row">
                 <label>Seach type:</label>
-                <div class="form__row-item">
+                <div class="form__row__item">
                     <label>
-                        <input type="radio" name="seach" value="links" checked/>links
+                        <input type="radio" name="search" value="links" checked/>links
                     </label>
                 </div>
-                <div class="form__row-item">
+                <div class="form__row__item">
                     <label>
-                        <input type="radio" name="seach" value="images"/>images
+                        <input type="radio" name="search" value="images"/>images
                     </label>
                 </div>
-                <div class="form__row-item">
+                <div class="form__row__item">
                     <label>
-                        <input type="radio" name="seach" value="text"/>text
+                        <input type="radio" name="search" value="text"/>text
                     </label>
                 </div>
-                <div class="form__row-error">
-                </div>
+                <div class="form__row__error"></div>
             </div>
-            <div class="form__row hidden">
+            <div class="form__row" style="display:none">
                 <label>Text to search:</label>
                 <input type="text" name="text"/>
+                <div class="form__row__error"></div>
             </div>
             <button type="submit">Submit</button>
         </form>

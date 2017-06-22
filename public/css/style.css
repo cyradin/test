@@ -1,8 +1,1 @@
-main {
-    width: 800px;
-    margin: 0 auto;
-}
-
-.form {
-
-}
+main{width:800px;margin:0 auto}.form__row{margin-bottom:15px}.form__row.error input{border:1px solid red}.form__row.success input{border:1px solid green}

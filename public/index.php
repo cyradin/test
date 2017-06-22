@@ -1,12 +1,12 @@
 <?php
-require('../vendor/autoload.php');
+require '../vendor/autoload.php';
 
 use Lib\Config;
 
 /**
  * Class autoload function
  */
-spl_autoload_register(function($class) {
+spl_autoload_register(function ($class) {
     $file = __DIR__ . '/../' . str_replace('\\', DIRECTORY_SEPARATOR, $class . '.php');
     if (file_exists($file)) {
         require($file);
@@ -25,10 +25,10 @@ foreach ($routes as $route => $parameters) {
     }
 
     $controller = 'Controllers\\' . $parameters['controller'] . 'Controller';
-    $action = $parameters['action'] . 'Action';
+    $action     = $parameters['action'] . 'Action';
 }
 
-if (! ($controller && $action)) {
+if (!($controller && $action)) {
     http_response_code(404);
     die();
 }
@@ -37,7 +37,7 @@ if (! ($controller && $action)) {
  * Setting up Twig
  */
 $loader = new Twig_Loader_Filesystem(__DIR__ . '/../templates');
-$twig = new Twig_Environment($loader);
+$twig   = new Twig_Environment($loader);
 
 $controllerInstance = new $controller($twig);
 $controllerInstance->$action();

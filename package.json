@@ -1,0 +1,23 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "```     # npm install     # npm install -g uglifycss     # npm install -g uglify-js ```",
+  "main": "test.js",
+  "dependencies": {
+    "less": "^2.7.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cyradin/test.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cyradin/test/issues"
+  },
+  "homepage": "https://github.com/cyradin/test#readme"
+}

@@ -1,0 +1,20 @@
+main {
+    width: 800px;
+    margin: 0 auto;
+}
+
+.form {
+    &__row {
+        margin-bottom: 15px;
+        &.error {
+            input {
+                border: 1px solid red;
+            }
+        }
+        &.success {
+            input {
+                border: 1px solid green;
+            }
+        }
+    }
+}
