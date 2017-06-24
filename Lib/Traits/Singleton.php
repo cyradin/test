@@ -15,6 +15,11 @@ trait Singleton
         return static::$instance;
     }
 
+    private static function init()
+    {
+        static::$instance = new static();
+    }
+
     private function __construct()
     {}
 

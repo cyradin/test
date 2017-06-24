@@ -12,17 +12,17 @@
                 <label>Seach type:</label>
                 <div class="form__row__item">
                     <label>
-                        <input type="radio" name="search" value="links" checked/>links
+                        <input type="radio" name="type" value="links" checked/>links
                     </label>
                 </div>
                 <div class="form__row__item">
                     <label>
-                        <input type="radio" name="search" value="images"/>images
+                        <input type="radio" name="type" value="images"/>images
                     </label>
                 </div>
                 <div class="form__row__item">
                     <label>
-                        <input type="radio" name="search" value="text"/>text
+                        <input type="radio" name="type" value="text"/>text
                     </label>
                 </div>
                 <div class="form__row__error"></div>
@@ -35,4 +35,5 @@
             <button type="submit">Submit</button>
         </form>
     </div>
+    <div id="main-result" style="display:none">Everything went OK. You can view the result <a href="/url/list" target="_blank">here</a></div>
 {% endblock %}

@@ -1,1 +1,1 @@
-main{width:800px;margin:0 auto}.form__row{margin-bottom:15px}.form__row.error input{border:1px solid red}.form__row.success input{border:1px solid green}
+main{width:800px;margin:0 auto}.form__row{margin-bottom:15px}.form__row.error input{border:1px solid red}.form__row.success input{border:1px solid green}.form__row__error{text-transform:lowercase;color:red}.error-block{text-align:center}.error-block__text{font-size:32px}

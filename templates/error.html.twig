@@ -1,0 +1,12 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    <div class="error-block">
+        <div class="error-block__image">
+            <img src="/public/img/error.png"/>
+        </div>
+        <div class="error-block__text">
+            {{ code }} - {{ text }}
+        </div>
+    </div>
+{% endblock %}

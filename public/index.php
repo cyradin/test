@@ -2,6 +2,7 @@
 require '../vendor/autoload.php';
 
 use Lib\Config;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class autoload function
@@ -40,4 +41,4 @@ $loader = new Twig_Loader_Filesystem(__DIR__ . '/../templates');
 $twig   = new Twig_Environment($loader);
 
 $controllerInstance = new $controller($twig);
-$controllerInstance->$action();
+$controllerInstance->$action(Request::createFromGlobals());

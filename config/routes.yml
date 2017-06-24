@@ -2,3 +2,15 @@ routes:
     '/':
         controller: Index
         action: index
+    '/public/url/list':
+        controller: Index
+        action: urlList
+    '/public/api/v1/url/add':
+        controller: Api\Url
+        action: add
+    '/public/api/v1/url/get':
+        controller: Api\Url
+        action: get
+    '/public/api/v1/url/list':
+        controller: Api\Url
+        action: list

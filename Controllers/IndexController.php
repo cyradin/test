@@ -2,12 +2,19 @@
 
 namespace Controllers;
 
-class IndexController extends Controller
+use Symfony\Component\HttpFoundation\Request;
+
+class IndexController extends AbstractController
 {
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         return $this->render('index.html.twig', [
             'title' => 'Main page'
         ]);
+    }
+
+    public function urlListAction(Request $request)
+    {
+
     }
 }

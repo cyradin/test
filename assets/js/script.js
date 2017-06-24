@@ -1,10 +1,43 @@
 $(document).ready(function() {
+    function showErrors(errors) {
+        for (var e in errors) {
+            if (!errors.hasOwnProperty(e)) {
+                continue;
+            }
+
+            var $input = $('input[name=' + e + ']');
+            if (!$input.length) {
+                continue;
+            }
+
+            $input.closest('.form__row')
+                .removeClass('success')
+                .addClass('error')
+                .find('.form__row__error')
+                .html('<label>' + errors[e] + '</label>');
+        }
+    }
+
     $.validator.addMethod('regex', function(value, element, regexp) {
         return this.optional(element) || regexp.test(value);
     }, 'wrong input format');
 
     $('#main-form').validate({
         submitHandler: function (form) {
+            $('#main-result').hide();
+            $.ajax({
+                url: '/api/v1/url/add',
+                method: 'POST',
+                dataType: 'json',
+                data: $(form).serialize(),
+                success: function(result) {
+                    if (result.status) {
+                        $('#main-result').show();
+                    } else {
+                        showErrors(result.errors);
+                    }
+                }
+            })
             return;
         },
         rules: {
@@ -20,8 +53,15 @@ $(document).ready(function() {
             }
         },
         messages: {
+            search: {
+                required: validationMessages.notEmpty
+            },
             url: {
-                regex: 'Wrong url format.'
+                required: validationMessages.notEmpty,
+                regex: validationMessages.urlRegex
+            },
+            text: {
+                required: validationMessages.notEmpty
             }
         },
         errorClass: 'error',
