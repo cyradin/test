@@ -40,7 +40,8 @@ abstract class AbstractController
         http_response_code($code);
         $this->send($this->twig->render('error.html.twig', [
             'code' => $code,
-            'text' => Response::$statusTexts[$code]
+            'text' => Response::$statusTexts[$code],
+            'validationMessages' => json_encode(Validator::instance()->getMessages())
         ]));
     }
 }

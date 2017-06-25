@@ -1,6 +1,6 @@
 database:
     user: root
-    password: 11111
+    password: 1
     database: test
     host: 127.0.0.1
     port: 3306

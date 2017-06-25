@@ -79,11 +79,13 @@ class ValidationResult implements \Iterator
         if ($errors = $field->getErrors()) {
             $this->errors[$field->getCode()] = $errors;
         }
+
+        $this->data[] = $field;
     }
 
     /**
      * Check if there are no errors
-     * @return boolean
+     * @return bool
      */
     public function isSuccessful(): bool
     {
@@ -93,5 +95,19 @@ class ValidationResult implements \Iterator
     public function getErrors()
     {
         return $this->errors;
+    }
+
+    /**
+     * Return all field codes and values
+     * @return array [code => value]
+     */
+    public function getValues(): ?array
+    {
+        $result = [];
+        foreach ($this->data as $field) {
+            $result[$field->getCode()] = $field->getValue();
+        }
+
+        return $result;
     }
 }

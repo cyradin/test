@@ -4,7 +4,9 @@ CREATE TABLE `links` (
     `type` VARCHAR(20) NULL DEFAULT NULL,
     `data` MEDIUMTEXT NULL,
     `count` INT(10) UNSIGNED NULL DEFAULT NULL,
+    `text` VARCHAR(500) NULL DEFAULT NULL,
     PRIMARY KEY (`id`)
 )
+COLLATE='utf8mb4_general_ci'
 ENGINE=InnoDB
 ;

@@ -30,8 +30,12 @@ foreach ($routes as $route => $parameters) {
 }
 
 if (!($controller && $action)) {
-    http_response_code(404);
-    die();
+    $error = 404;
+}
+
+$db = Lib\Database::instance();
+if (!$db->isConnected()) {
+    $error = 500;
 }
 
 /**
@@ -40,5 +44,10 @@ if (!($controller && $action)) {
 $loader = new Twig_Loader_Filesystem(__DIR__ . '/../templates');
 $twig   = new Twig_Environment($loader);
 
-$controllerInstance = new $controller($twig);
-$controllerInstance->$action(Request::createFromGlobals());
+if (! $error) {
+    $controllerInstance = new $controller($twig);
+    $controllerInstance->$action(Request::createFromGlobals());
+} else {
+    $controllerInstance = new Controllers\ErrorController($twig);
+    $controllerInstance->sendError($error);
+}

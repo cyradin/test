@@ -3,14 +3,11 @@
 namespace Controllers\Api;
 
 use Lib\Validation\Validator;
+use Models\Link;
 use Symfony\Component\HttpFoundation\Request;
 
 class UrlController extends AbstractApiController
 {
-    const TYPE_TEXT   = 'text';
-    const TYPE_IMAGES = 'images';
-    const TYPE_LINKS  = 'links';
-
     public function addAction(Request $request)
     {
         $fields = [
@@ -26,14 +23,14 @@ class UrlController extends AbstractApiController
             'type' => [
                 'notEmpty' => true,
                 'in'       => [
-                    static::TYPE_TEXT,
-                    static::TYPE_IMAGES,
-                    static::TYPE_LINKS
+                    Link::TYPE_TEXT,
+                    Link::TYPE_IMAGES,
+                    Link::TYPE_LINKS
                 ]
             ]
         ];
 
-        if ($fields['type'] == static::TYPE_TEXT) {
+        if ($fields['type'] == Link::TYPE_TEXT) {
             $fields['text'] = $request->request->get('text');
             $rules['text']  = ['notEmpty' => true];
         }
@@ -46,7 +43,19 @@ class UrlController extends AbstractApiController
                 $response['errors'][$code] = implode('. ', $errors);
             }
         } else {
-            $response['id'] = 1000;
+            $data = $validationResult->getValues();
+
+            $link = new Link();
+            $link
+                ->setUrl($data['url'])
+                ->setType($data['type'])
+                ->setText($data['text'] ?? '');
+
+            if ($id = $link->save()) {
+                $response['id'] = $id;
+            } else {
+                $response['status'] = false;
+            }
         }
 
         $this->sendJson($response);

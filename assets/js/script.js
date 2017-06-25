@@ -78,7 +78,7 @@ $(document).ready(function() {
         }
     });
 
-    $('[name=search]').on('change', function (e) {
+    $('[name=type]').on('change', function (e) {
         if ($(this).val() === 'text') {
             $('[name=text]').closest('.form__row').show();
         } else {
