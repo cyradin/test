@@ -1,0 +1,14 @@
+<div class="link">
+    <div class="link__type">Type: {{ link.type }}</div>
+    <div class="link__data">
+        {% for data in link.data %}
+            <div class="link__data__item">
+                {% if (link.type == 'text') %}
+                    {{ data }}
+                {% else %}
+                    <a href="{{ data }}" target="_blank">{{ data }}</a>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+</div>

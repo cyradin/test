@@ -2,6 +2,8 @@
 
 namespace Models;
 
+use Buzz\Browser;
+
 class Link extends AbstractModel
 {
     public const TABLE_NAME = 'links';
@@ -18,7 +20,7 @@ class Link extends AbstractModel
 
     protected $data;
 
-    protected $count;
+    protected $cnt;
 
     protected $text;
 
@@ -27,7 +29,7 @@ class Link extends AbstractModel
         'url',
         'type',
         'data',
-        'count',
+        'cnt',
         'text'
     ];
 
@@ -51,9 +53,9 @@ class Link extends AbstractModel
         return $this->type;
     }
 
-    public function getCount()
+    public function getCnt()
     {
-        return $this->count;
+        return $this->cnt;
     }
 
     public function setUrl($url)
@@ -82,22 +84,74 @@ class Link extends AbstractModel
         return $this;
     }
 
-    protected function setCount($count)
+    protected function setCnt($cnt)
     {
-        $this->count = $count;
+        $this->cnt = $cnt;
         return $this;
     }
 
     public function save()
     {
         $this
-            ->setCount(count($this->getData()))
             ->setText($this->type == static::TYPE_TEXT ?
                 $this->text :
                 ''
             )
-            ->setData([]); // @TODO
+            ->setData($this->fillData())
+            ->setCnt(count($this->getData()));
 
         return parent::save();
+    }
+
+    protected function fillData()
+    {
+        $browser = new Browser();
+        $response = $browser->get($this->url)->__toString();
+
+        $matches = [];
+        $result = [];
+        switch ($this->type) {
+            case static::TYPE_LINKS:
+                preg_match_all('/<a[^>]+href="(\/|http[^"]+)"/i', $response, $matches);
+                $result = $matches[1] ?? [];
+                break;
+            case static::TYPE_IMAGES:
+                preg_match_all('/<img[^>]+src="([^"]+)"/i', $response, $matches);
+                $result = $matches[1] ?? [];
+                break;
+            default:
+                preg_match_all('/' . preg_quote($this->text, '/') . '/i', $response, $matches);
+                $result = $matches[0] ?? [];
+                break;
+        }
+
+        // convert relative URLs to absolute
+        if (in_array($this->type, [static::TYPE_LINKS, static::TYPE_IMAGES])) {
+            $parsedUrl = parse_url($this->url);
+            $scheme   = isset($parsedUrl['scheme']) ? $parsedUrl['scheme'] . '://' : 'http://';
+            $host     = isset($parsedUrl['host']) ? $parsedUrl['host'] : '';
+            $port     = isset($parsedUrl['port']) ? ':' . $parsedUrl['port'] : '';
+            $user     = isset($parsedUrl['user']) ? $parsedUrl['user'] : '';
+            $pass     = isset($parsedUrl['pass']) ? ':' . $parsedUrl['pass']  : '';
+            $pass     = ($user || $pass) ? "$pass@" : '';
+            $path     = isset($parsedUrl['path']) ? $parsedUrl['path'] : '';
+            $defaultUrl = $scheme . $user . $pass . $host . $port . $path;
+
+            if (substr($defaultUrl, -1) == '/') {
+                $defaultUrl = substr($defaultUrl, 0, -1);
+            }
+
+            foreach ($result as &$value) {
+                if (! preg_match('/^https?:\/\//', $value)) {
+                    if (strpos('/', $value) !== 0) {
+                        $value = '/' . $value;
+                    }
+                    $value = $defaultUrl . $value;
+                }
+
+            }
+        }
+
+        return $result;
     }
 }

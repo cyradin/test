@@ -29,6 +29,7 @@ foreach ($routes as $route => $parameters) {
     $action     = $parameters['action'] . 'Action';
 }
 
+$error = null;
 if (!($controller && $action)) {
     $error = 404;
 }

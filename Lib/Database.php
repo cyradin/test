@@ -53,14 +53,13 @@ class Database
             $query->execute();
             $result = $query->rowCount() > 0;
         } catch (\PDOException $e) {
-            var_dump($e);
             return false;
         }
 
         return $result;
     }
 
-    public function select(string $table, array $where = [], array $sort = [], $limit = null): ?array
+    public function select(string $table, array $where = [], array $sort = [], $limit = null)
     {
         $result = [];
         try {
@@ -75,6 +74,25 @@ class Database
 
             $query->execute();
             $result = $query->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            return false;
+        }
+
+        return $result;
+    }
+
+    public function count(string $table, array $where = [])
+    {
+        $result = 0;
+        try {
+            list($where, $parameters) = $this->getWhere($where);
+            $query = $this->db->prepare('SELECT COUNT(*) as cnt FROM `' . $table . '` ' . $where);
+
+            $query->execute();
+            $queryResult = $query->fetch(\PDO::FETCH_ASSOC);
+            if (!empty($queryResult)) {
+                $result = $queryResult['cnt'];
+            }
         } catch (\PDOException $e) {
             return false;
         }
@@ -121,7 +139,7 @@ class Database
         return $result;
     }
 
-    public function insert(string $table, array $data = []): ?int
+    public function insert(string $table, array $data = [])
     {
         try {
             $parameters = $this->getParameters($data);

@@ -1,0 +1,13 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    <div class="links">
+        {% for link in links %}
+            <div class="links__item" data-id="{{ link.id }}">
+                <div class="links__item__show"><i></i>{{ link.url }} -{{ link.cnt }} results</div>
+                <div class="links__item__content" style="display:none"></div>
+            </div>
+        {% endfor %}
+    </div>
+    {% include 'paginator.html.twig' with { pageCount: pageCount, currentPage: currentPage, currentUrl: currentUrl } only %}
+{% endblock %}

@@ -63,7 +63,19 @@ class UrlController extends AbstractApiController
 
     public function getAction(Request $request)
     {
+        $id = $request->query->get('id');
+        if (!$id) {
+            $this->sendError(404);
+        }
 
+        if (!$link = Link::findById($id)) {
+            $this->sendError(404);
+        }
+
+        $this->sendJson([
+            'status' => true,
+            'html'   => $this->render('link.html.twig', ['link' => $link])
+        ]);
     }
 
     public function listAction(Request $request)

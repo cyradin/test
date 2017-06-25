@@ -1,0 +1,10 @@
+<div class="paginator">
+    Page:
+    {% for i in 1..pageCount %}
+        {% if i == currentPage %}
+            <div class="paginator__page paginator__page--current">{{ i }}</div>
+        {% else %}
+            <div class="paginator__page"><a href="{{currentUrl}}?page={{ i }}">{{ i }}</a></div>
+        {% endif %}
+    {% endfor %}
+</div>

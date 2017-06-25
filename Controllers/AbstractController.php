@@ -21,7 +21,7 @@ abstract class AbstractController
         $this->twig = $twig;
     }
 
-    protected function render(string $template, ?array $parameters = []): void
+    protected function render(string $template, ?array $parameters = [])
     {
         $parameters['validationMessages'] = json_encode(Validator::instance()->getMessages());
         $this->send(
@@ -33,6 +33,7 @@ abstract class AbstractController
     {
         $response = new Response($data);
         $response->send();
+        die();
     }
 
     public function sendError(int $code): void

@@ -40,6 +40,11 @@ abstract class AbstractModel
         return Database::instance()->delete(static::TABLE_NAME, ['id' => $id]);
     }
 
+    public static function count(array $where = []): int
+    {
+        return Database::instance()->count(static::TABLE_NAME, $where);
+    }
+
     public function save()
     {
         if (isset($this->id)) {

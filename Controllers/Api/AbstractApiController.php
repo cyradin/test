@@ -15,5 +15,17 @@ class AbstractApiController extends AbstractController {
     {
         $response = new JsonResponse($data);
         $response->send();
+        die();
+    }
+
+    public function sendError(int $code): void
+    {
+        http_response_code($code);
+        $this->sendJson(['status' => false, 'error' => JsonResponse::$statusTexts[$code]]);
+    }
+
+    protected function render(string $template, ?array $parameters = [])
+    {
+        return $this->twig->render($template, $parameters);
     }
 }

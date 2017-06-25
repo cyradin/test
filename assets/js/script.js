@@ -37,7 +37,7 @@ $(document).ready(function() {
                         showErrors(result.errors);
                     }
                 }
-            })
+            });
             return;
         },
         rules: {
@@ -83,6 +83,38 @@ $(document).ready(function() {
             $('[name=text]').closest('.form__row').show();
         } else {
             $('[name=text]').closest('.form__row').hide();
+        }
+    });
+
+    $('.links__item__show').click(function() {
+        var $this = $(this);
+        var $item = $this.closest('.links__item');
+        var $content = $item.find('.links__item__content');
+        var id = $item.attr('data-id');
+
+        if ($content.is(':visible')) {
+            $content.slideUp();
+            $this.toggleClass('links__item__show--shown');
+            return;
+        }
+
+        if ($this.data('loaded')) {
+            $content.slideDown();
+            $this.toggleClass('links__item__show--shown');
+        } else {
+            $.ajax({
+                url: '/api/v1/url/get',
+                method: 'GET',
+                dataType: 'json',
+                data: { 'id' : id },
+                success: function(result) {
+                    if (result.status) {
+                        $this.data('loaded', true);
+                        $content.html(result.html).slideDown();
+                        $this.toggleClass('links__item__show--shown');
+                    }
+                }
+            })
         }
     });
 });
